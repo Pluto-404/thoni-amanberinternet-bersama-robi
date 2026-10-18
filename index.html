@@ -1,0 +1,1081 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <style>
+      :root {
+        color-scheme: light;
+        box-sizing: border-box;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      html {
+        scroll-padding-top: env(safe-area-inset-top, 0px);
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        font:
+          14px -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: #fff;
+        color: #000;
+      }
+      img {
+        max-width: 100%;
+      }
+      [hidden]:not([hidden="until-found" i]) {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <title>Aman Berinternet bersama Robi – Ahmad Fathoni Nur Mahmudi</title>
+    <meta name="claude:viewport-fit-sides" content="cover" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@600;700;800&display=swap"
+    />
+    <style>
+      /* Layout: page header, then a 16:9 "video player" stage with player controls, then two info columns (chapters + what is being tested). */
+      :root {
+        --bg: #f6f3ea;
+        --surface: #ffffff;
+        --fg: #1f2a44;
+        --muted: #5b6478;
+        --line: #ddd6c3;
+        --accent: #2f80ed;
+        --accent-ink: #ffffff;
+        --safe: #1e9e58;
+        --warn: #e5484d;
+        --chip: #e8f1fd;
+        --display: "Poppins", "Segoe UI", system-ui, sans-serif;
+        --body: "Nunito", "Segoe UI", system-ui, sans-serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #141a26;
+          --surface: #1c2433;
+          --fg: #eef1f7;
+          --muted: #a7b0c2;
+          --line: #2e3a4f;
+          --accent: #5a9bf2;
+          --accent-ink: #0e1420;
+          --safe: #3cc57e;
+          --warn: #f06a6e;
+          --chip: #22324b;
+          color-scheme: dark;
+        }
+      }
+      :root[data-theme="dark"] {
+        --bg: #141a26;
+        --surface: #1c2433;
+        --fg: #eef1f7;
+        --muted: #a7b0c2;
+        --line: #2e3a4f;
+        --accent: #5a9bf2;
+        --accent-ink: #0e1420;
+        --safe: #3cc57e;
+        --warn: #f06a6e;
+        --chip: #22324b;
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--body);
+        font-size: 16px;
+        line-height: 1.55;
+        padding-left: max(16px, env(safe-area-inset-left, 0px));
+        padding-right: max(16px, env(safe-area-inset-right, 0px));
+        padding-block: 20px 40px;
+      }
+      .wrap {
+        max-width: 1040px;
+        margin: 0 auto;
+        display: grid;
+        gap: 20px;
+      }
+      header {
+        display: grid;
+        gap: 6px;
+      }
+      .eyebrow {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      h1 {
+        font-family: var(--display);
+        font-weight: 800;
+        font-size: clamp(24px, 4vw, 34px);
+        line-height: 1.15;
+        margin: 0;
+        text-wrap: balance;
+      }
+      .by {
+        margin: 0;
+        font-size: 15px;
+        color: var(--muted);
+      }
+      .by strong {
+        color: var(--fg);
+      }
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .chip {
+        background: var(--chip);
+        color: var(--fg);
+        border-radius: 999px;
+        padding: 3px 12px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .player {
+        background: #0f1626;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+      .stage {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
+        max-width: 100%;
+        background: #fff8e7;
+        overflow: hidden;
+      }
+      .stage svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .sub {
+        position: absolute;
+        left: 50%;
+        bottom: 4.5%;
+        transform: translateX(-50%);
+        max-width: 86%;
+        text-align: center;
+        background: rgba(15, 22, 38, 0.82);
+        color: #fff;
+        border-radius: 10px;
+        padding: 0.35em 0.8em;
+        font-family: var(--body);
+        font-weight: 700;
+        font-size: clamp(11px, 1.9vw, 19px);
+        line-height: 1.35;
+      }
+      .sub b {
+        font-family: var(--display);
+        font-weight: 700;
+        margin-right: 0.35em;
+      }
+      .sub[hidden] {
+        display: none !important;
+      }
+      .overlay {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: rgba(15, 22, 38, 0.55);
+        padding: 4%;
+      }
+      .card {
+        background: #fff;
+        color: #1f2a44;
+        border-radius: 16px;
+        padding: clamp(12px, 2.4vw, 26px);
+        max-width: 620px;
+        width: 100%;
+        display: grid;
+        gap: clamp(8px, 1.4vw, 14px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      }
+      .card h2 {
+        font-family: var(--display);
+        font-size: clamp(14px, 2.4vw, 22px);
+        margin: 0;
+        line-height: 1.25;
+      }
+      .card p {
+        margin: 0;
+        font-size: clamp(12px, 1.8vw, 16px);
+      }
+      .tag {
+        justify-self: start;
+        background: #eb5757;
+        color: #fff;
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: clamp(10px, 1.4vw, 13px);
+        letter-spacing: 0.06em;
+        border-radius: 8px;
+        padding: 2px 10px;
+      }
+      .opts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .opt {
+        font: inherit;
+        font-weight: 800;
+        font-size: clamp(12px, 1.8vw, 16px);
+        text-align: left;
+        border: 3px solid #1f2a44;
+        background: #fff;
+        color: #1f2a44;
+        border-radius: 12px;
+        padding: 0.6em 0.8em;
+        cursor: pointer;
+      }
+      .opt:hover {
+        background: #f3f7ff;
+      }
+      .opt:focus-visible,
+      .btn:focus-visible,
+      .chap:focus-visible,
+      input[type="range"]:focus-visible {
+        outline: 3px solid #f2c94c;
+        outline-offset: 2px;
+      }
+      .fb {
+        border-radius: 12px;
+        padding: 0.6em 0.8em;
+        font-weight: 700;
+        font-size: clamp(12px, 1.8vw, 16px);
+      }
+      .fb.ok {
+        background: #def5e7;
+        color: #145c34;
+      }
+      .fb.no {
+        background: #fde2e2;
+        color: #8a1f22;
+      }
+      .go {
+        justify-self: end;
+        font: inherit;
+        font-weight: 800;
+        background: #2f80ed;
+        color: #fff;
+        border: 0;
+        border-radius: 10px;
+        padding: 0.55em 1.1em;
+        cursor: pointer;
+        font-size: clamp(12px, 1.8vw, 16px);
+      }
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        color: #fff;
+        flex-wrap: wrap;
+      }
+      .btn {
+        font: inherit;
+        font-weight: 800;
+        font-size: 14px;
+        background: #24324d;
+        color: #fff;
+        border: 0;
+        border-radius: 9px;
+        padding: 7px 12px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .btn.primary {
+        background: #2f80ed;
+      }
+      .btn[aria-pressed="false"] {
+        opacity: 0.65;
+      }
+      .seek {
+        flex: 1 1 220px;
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .seek input {
+        flex: 1;
+        min-width: 0;
+        accent-color: #f2c94c;
+      }
+      .time {
+        font-variant-numeric: tabular-nums;
+        font-size: 13px;
+        color: #c9d3e6;
+        white-space: nowrap;
+      }
+      .cols {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 20px;
+      }
+      @media (max-width: 720px) {
+        .cols {
+          grid-template-columns: 1fr;
+        }
+        .opts {
+          grid-template-columns: 1fr;
+        }
+      }
+      section.box {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 18px 20px;
+        min-width: 0;
+      }
+      section.box h3 {
+        font-family: var(--display);
+        font-size: 16px;
+        margin: 0 0 10px;
+      }
+      .chaps {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 4px;
+      }
+      .chap {
+        width: 100%;
+        font: inherit;
+        text-align: left;
+        background: transparent;
+        color: var(--fg);
+        border: 0;
+        border-radius: 8px;
+        padding: 7px 8px;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        gap: 8px;
+      }
+      .chap:hover {
+        background: var(--chip);
+      }
+      .chap.on {
+        background: var(--chip);
+      }
+      .chap .ts {
+        font-variant-numeric: tabular-nums;
+        color: var(--accent);
+        font-weight: 800;
+      }
+      ul.tests {
+        margin: 0;
+        padding-left: 20px;
+        display: grid;
+        gap: 6px;
+      }
+      .note {
+        font-size: 14px;
+        color: var(--muted);
+        margin: 12px 0 0;
+      }
+      footer {
+        font-size: 13px;
+        color: var(--muted);
+      }
+    </style>
+
+    <div class="wrap">
+      <header>
+        <div class="eyebrow">Prototipe media · Scene 4–5</div>
+        <h1>Aman Berinternet bersama Robi</h1>
+        <p class="by">
+          Dikembangkan oleh <strong>Ahmad Fathoni Nur Mahmudi</strong> · NIM
+          K3524040 · Pendidikan Teknik Informatika dan Komputer, Universitas
+          Sebelas Maret
+        </p>
+        <div class="meta">
+          <span class="chip">Informatika Kelas VI</span>
+          <span class="chip">Elemen 3 · Aman Menggunakan Internet</span>
+          <span class="chip">± 50 detik + jeda diskusi</span>
+        </div>
+      </header>
+
+      <div class="player">
+        <div class="stage" id="stage">
+          <svg
+            id="svg"
+            viewBox="0 0 1600 900"
+            role="img"
+            aria-label="Animasi: Dimas meminta kata sandi Raka, Robi menjelaskan ciri kata sandi yang kuat, lalu jeda diskusi."
+          ></svg>
+          <div class="sub" id="sub" aria-live="polite"></div>
+          <div class="overlay" id="startOv">
+            <div
+              class="card"
+              style="
+                max-width: 460px;
+                text-align: center;
+                justify-items: center;
+              "
+            >
+              <h2>Scene 4–5: Situasi Kata Sandi</h2>
+              <p>
+                Tekan putar untuk memulai. Nyalakan suara untuk mendengar narasi
+                sementara.
+              </p>
+              <button class="go" id="startBtn" style="justify-self: center">
+                ▶ Putar prototipe
+              </button>
+            </div>
+          </div>
+          <div class="overlay" id="pauseOv" hidden>
+            <div class="card">
+              <span class="tag">❚❚ JEDA DISKUSI</span>
+              <h2>Apa yang sebaiknya dilakukan Raka?</h2>
+              <p>Diskusikan bersama teman dan guru, lalu pilih jawabanmu.</p>
+              <div class="opts">
+                <button class="opt" id="optA">
+                  A. Memberikan kata sandinya karena Dimas sahabatnya
+                </button>
+                <button class="opt" id="optB">
+                  B. Menolak dengan sopan karena kata sandi itu rahasia
+                </button>
+              </div>
+              <div class="fb" id="fb" hidden></div>
+              <button class="go" id="contBtn" hidden>Lanjutkan ▶</button>
+            </div>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn primary" id="playBtn" aria-label="Putar">
+            ▶ Putar
+          </button>
+          <button class="btn" id="restartBtn" aria-label="Ulang dari awal">
+            ↺ Ulang
+          </button>
+          <div class="seek">
+            <input
+              type="range"
+              id="seek"
+              min="0"
+              max="54"
+              step="0.1"
+              value="0"
+              aria-label="Posisi video"
+            />
+            <span class="time" id="time">0:00 / 0:54</span>
+          </div>
+          <button class="btn" id="voiceBtn" aria-pressed="true">
+            🔊 Narasi
+          </button>
+          <button class="btn" id="ccBtn" aria-pressed="true">
+            CC Subtitle
+          </button>
+        </div>
+      </div>
+
+      <div class="cols">
+        <section class="box">
+          <h3>Isi prototipe</h3>
+          <ul class="chaps" id="chaps"></ul>
+        </section>
+        <section class="box">
+          <h3>Yang diuji pada prototipe ini</h3>
+          <ul class="tests">
+            <li>Gaya visual dan desain karakter Raka, Dimas, dan Robi</li>
+            <li>Tempo narasi dan keterbacaan subtitle</li>
+            <li>Keterbacaan teks pada layar ponsel di dalam video</li>
+            <li>
+              <i>Signaling</i>: indikator kekuatan sandi dan daftar ceklis
+            </li>
+            <li>Alur jeda diskusi beserta umpan balik</li>
+          </ul>
+          <p class="note">
+            Narasi memakai suara sintetis peramban sebagai narasi sementara.
+            Pada versi final, narasi direkam dengan suara manusia dan video
+            diekspor sebagai berkas .mp4.
+          </p>
+        </section>
+      </div>
+
+      <footer>
+        Prototipe UTS Teknologi Pembelajaran · Ahmad Fathoni Nur Mahmudi
+        (K3524040) · Pendidikan Teknik Informatika dan Komputer, Universitas
+        Sebelas Maret · 2026
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        const NAVY = "#1F2A44",
+          BLUE = "#2F80ED",
+          GREEN = "#27AE60",
+          YEL = "#F2C94C",
+          RED = "#EB5757",
+          CREAM = "#FFF8E7",
+          SKIN = "#F1C296",
+          LBLUE = "#D6EAFF",
+          PURPLE = "#9B59B6";
+        const END = 54,
+          PAUSE_AT = 50;
+        const cues = [
+          {
+            s: 4,
+            e: 9,
+            who: "Dimas",
+            c: PURPLE,
+            t: "Rak, pinjam kata sandi akun gimmu dong!",
+            pitch: 1.05,
+          },
+          {
+            s: 9,
+            e: 12.5,
+            who: "Raka",
+            c: BLUE,
+            t: "Eh… gimana ya?",
+            pitch: 1.3,
+          },
+          {
+            s: 12.5,
+            e: 16,
+            who: "Robi",
+            c: BLUE,
+            t: "Tunggu, Raka!",
+            pitch: 1.5,
+          },
+          {
+            s: 16,
+            e: 23,
+            who: "Robi",
+            c: BLUE,
+            t: "Kata sandi itu seperti sikat gigi: tidak boleh dipinjamkan, bahkan ke sahabat.",
+            pitch: 1.5,
+          },
+          {
+            s: 23,
+            e: 29,
+            who: "Robi",
+            c: BLUE,
+            t: "Kata sandi “raka123” juga mudah ditebak. Lihat, kekuatannya masih lemah.",
+            pitch: 1.5,
+          },
+          {
+            s: 29,
+            e: 41,
+            who: "Robi",
+            c: BLUE,
+            t: "Kata sandi yang kuat minimal delapan karakter, campuran huruf besar, huruf kecil, angka, dan simbol, dan bukan nama atau tanggal lahir.",
+            pitch: 1.5,
+          },
+          {
+            s: 43,
+            e: 50,
+            who: "Robi",
+            c: BLUE,
+            t: "Menurut kamu, apa yang sebaiknya dilakukan Raka? Jeda videonya dan diskusikan bersama gurumu!",
+            pitch: 1.5,
+          },
+          {
+            s: 50.2,
+            e: 54,
+            who: "Robi",
+            c: BLUE,
+            t: "Ingat, kata sandi itu rahasia. Sampai jumpa di situasi berikutnya!",
+            pitch: 1.5,
+          },
+        ];
+        const chapters = [
+          [0, "Pembuka Scene 4"],
+          [4, "Dimas meminta kata sandi"],
+          [16, "Analogi sikat gigi"],
+          [23, "Kata sandi lemah: raka123"],
+          [29, "Ciri kata sandi yang kuat"],
+          [42, "Scene 5: jeda diskusi"],
+          [50, "Penutup prototipe"],
+        ];
+
+        // ---------- build SVG ----------
+        const svg = document.getElementById("svg");
+        const kid = (id, shirt, hair, girl) => `
+<g id="${id}">
+ <rect x="-42" y="-84" width="30" height="84" rx="6" fill="${NAVY}"/><rect x="12" y="-84" width="30" height="84" rx="6" fill="${NAVY}"/>
+ <rect x="-62" y="-252" width="124" height="176" rx="30" fill="${shirt}" stroke="${NAVY}" stroke-width="5"/>
+ ${girl ? `<circle cx="-66" cy="-300" r="22" fill="${hair}"/><circle cx="66" cy="-300" r="22" fill="${hair}"/>` : ""}
+ <circle cx="0" cy="-312" r="62" fill="${SKIN}" stroke="${NAVY}" stroke-width="5"/>
+ <path d="M-66,-314 Q-66,-384 0,-384 Q66,-384 66,-314 Q40,-340 0,-338 Q-40,-340 -66,-314 Z" fill="${hair}"/>
+ <circle cx="-22" cy="-306" r="7" fill="${NAVY}"/><circle cx="22" cy="-306" r="7" fill="${NAVY}"/>
+ <g class="brow" opacity="0"><path d="M-32,-326 L-12,-320" stroke="${NAVY}" stroke-width="5" stroke-linecap="round"/><path d="M32,-326 L12,-320" stroke="${NAVY}" stroke-width="5" stroke-linecap="round"/></g>
+ <path class="happy" d="M-20,-284 Q0,-264 20,-284" stroke="${NAVY}" stroke-width="5" fill="none" stroke-linecap="round"/>
+ <path class="worry" d="M-16,-272 Q0,-286 16,-272" stroke="${NAVY}" stroke-width="5" fill="none" stroke-linecap="round" opacity="0"/>
+</g>`;
+        const bubble = (id, w, lines, fs = 34) => {
+          const h = lines.length * fs * 1.25 + 36;
+          return `<g id="${id}" opacity="0"><rect x="${-w / 2}" y="${-h}" width="${w}" height="${h}" rx="22" fill="#fff" stroke="${NAVY}" stroke-width="5"/><path d="M-18,-3 L0,30 L18,-3 Z" fill="#fff" stroke="${NAVY}" stroke-width="5" stroke-linejoin="round"/><rect x="-22" y="-8" width="44" height="10" fill="#fff"/>${lines.map((l, i) => `<text x="0" y="${-h + 18 + fs * (i + 1) * 1.15}" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="${fs}" fill="${NAVY}">${l}</text>`).join("")}</g>`;
+        };
+        svg.innerHTML = `
+<defs><clipPath id="clipStage"><rect width="1600" height="900"/></clipPath></defs>
+<g clip-path="url(#clipStage)">
+<g id="scene4">
+ <rect width="1600" height="900" fill="${CREAM}"/>
+ <rect y="700" width="1600" height="200" fill="#ECE2CC"/>
+ <rect x="110" y="110" width="300" height="220" rx="12" fill="${LBLUE}" stroke="${NAVY}" stroke-width="6"/>
+ <line x1="260" y1="110" x2="260" y2="330" stroke="${NAVY}" stroke-width="6"/><line x1="110" y1="220" x2="410" y2="220" stroke="${NAVY}" stroke-width="6"/>
+ <rect x="470" y="60" width="300" height="96" rx="12" fill="#fff" stroke="${NAVY}" stroke-width="5"/>
+ <text x="620" y="122" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="40" fill="${BLUE}">LAB KOMPUTER</text>
+ <rect x="80" y="560" width="360" height="22" rx="6" fill="#B98A5A"/><rect x="100" y="582" width="20" height="120" fill="#9C7046"/><rect x="400" y="582" width="20" height="120" fill="#9C7046"/>
+ <rect x="150" y="430" width="220" height="130" rx="10" fill="${NAVY}"/><rect x="164" y="444" width="192" height="100" rx="6" fill="${LBLUE}"/><rect x="245" y="560" width="30" height="0" fill="${NAVY}"/>
+ <g id="raka" transform="translate(600,720)">${kid("rakaK", BLUE, "#5A3A22", false)}<rect x="44" y="-196" width="44" height="74" rx="8" fill="${NAVY}"/><rect x="50" y="-188" width="32" height="58" rx="4" fill="${LBLUE}"/></g>
+ <g id="dimas" transform="translate(1750,720)">${kid("dimasK", PURPLE, "#3A2A1E", false)}</g>
+ <g id="robi" transform="translate(1300,640) scale(0)">
+  <line x1="0" y1="-262" x2="0" y2="-222" stroke="${NAVY}" stroke-width="7"/><circle cx="0" cy="-272" r="15" fill="${YEL}" stroke="${NAVY}" stroke-width="5"/>
+  <rect x="-86" y="-222" width="172" height="138" rx="38" fill="${BLUE}" stroke="${NAVY}" stroke-width="6"/>
+  <rect x="-64" y="-200" width="128" height="94" rx="22" fill="${LBLUE}"/>
+  <circle cx="-26" cy="-160" r="14" fill="${NAVY}"/><circle cx="26" cy="-160" r="14" fill="${NAVY}"/>
+  <path d="M-22,-134 Q0,-116 22,-134" stroke="${NAVY}" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <rect x="-56" y="-76" width="112" height="92" rx="24" fill="${BLUE}" stroke="${NAVY}" stroke-width="6"/>
+  <circle id="robiLight" cx="0" cy="-30" r="18" fill="${GREEN}"/>
+ </g>
+ <g transform="translate(900,330)">${bubble("bDimas", 520, ["Rak, pinjam kata sandi", "akun gimmu dong!"])}</g>
+ <g transform="translate(600,290)">${bubble("bRaka", 330, ["Eh… gimana ya?"])}</g>
+ <g transform="translate(1300,330)">${bubble("bRobi1", 340, ["Tunggu, Raka!"])}</g>
+ <g id="tipBrush" opacity="0" transform="translate(1050,250)">
+  <rect x="-270" y="-150" width="540" height="180" rx="24" fill="#fff" stroke="${NAVY}" stroke-width="5"/>
+  <g transform="translate(-185,-58) rotate(-20) scale(.8)"><rect x="-80" y="-12" width="150" height="24" rx="12" fill="${BLUE}"/><rect x="40" y="-34" width="44" height="26" rx="6" fill="#fff" stroke="${NAVY}" stroke-width="4"/><g stroke="${LBLUE}" stroke-width="4"><line x1="48" y1="-30" x2="48" y2="-12"/><line x1="60" y1="-30" x2="60" y2="-12"/><line x1="72" y1="-30" x2="72" y2="-12"/></g></g>
+  <text x="85" y="-78" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="36" fill="${NAVY}">Seperti sikat gigi:</text>
+  <text x="85" y="-30" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="36" fill="${RED}">tidak dipinjamkan!</text>
+ </g>
+ <g id="zoom" opacity="0">
+  <rect width="1600" height="900" fill="${NAVY}" opacity=".45"/>
+  <g id="phone" transform="translate(560,450)">
+   <rect x="-200" y="-380" width="400" height="760" rx="48" fill="${NAVY}"/>
+   <rect x="-176" y="-330" width="352" height="660" rx="20" fill="#fff"/>
+   <rect x="-40" y="-362" width="80" height="12" rx="6" fill="#3B4766"/>
+   <text x="0" y="-262" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="36" fill="${NAVY}">Akun Gim</text>
+   <text x="-150" y="-180" font-family="Nunito, sans-serif" font-weight="800" font-size="28" fill="#5B6478">Kata sandi</text>
+   <rect x="-150" y="-158" width="300" height="78" rx="14" fill="#F4F6FA" stroke="${NAVY}" stroke-width="4"/>
+   <text id="pwText" x="-134" y="-108" font-family="Nunito, sans-serif" font-weight="800" font-size="30" fill="${NAVY}">raka123</text>
+   <rect id="caret" x="0" y="-140" width="4" height="44" fill="${BLUE}"/>
+   <text x="-150" y="-20" font-family="Nunito, sans-serif" font-weight="800" font-size="26" fill="#5B6478">Kekuatan</text>
+   <rect x="-150" y="0" width="300" height="26" rx="13" fill="#E6E9F0"/>
+   <rect id="meter" x="-150" y="0" width="60" height="26" rx="13" fill="${RED}"/>
+   <text id="meterLbl" x="0" y="86" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="44" fill="${RED}">LEMAH</text>
+   <g id="zoomRing" opacity="0"><rect x="-166" y="-174" width="332" height="110" rx="20" fill="none" stroke="${YEL}" stroke-width="8"/></g>
+   <rect x="-120" y="190" width="240" height="66" rx="16" fill="${BLUE}"/>
+   <text x="0" y="234" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="28" fill="#fff">Simpan</text>
+  </g>
+  <g id="checklist" transform="translate(830,110)"></g>
+ </g>
+</g>
+<g id="wipe"><rect id="wipeR" x="1600" y="0" width="1600" height="900" fill="#FFE9E9"/></g>
+<g id="scene5" opacity="0">
+ <rect width="1600" height="900" fill="#FFF0F0"/>
+ <g id="badge"><rect x="1150" y="50" width="400" height="80" rx="20" fill="${RED}"/><rect x="1186" y="70" width="14" height="40" rx="3" fill="#fff"/><rect x="1210" y="70" width="14" height="40" rx="3" fill="#fff"/><text x="1248" y="106" font-family="Poppins, sans-serif" font-weight="800" font-size="38" fill="#fff">JEDA DISKUSI</text></g>
+ <rect x="170" y="200" width="1060" height="250" rx="30" fill="#fff" stroke="${NAVY}" stroke-width="6"/>
+ <text x="700" y="305" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="64" fill="${NAVY}">Apa yang sebaiknya</text>
+ <text x="700" y="390" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="64" fill="${NAVY}">dilakukan Raka?</text>
+ <g id="optSvgA" opacity="0"><rect x="170" y="520" width="510" height="120" rx="22" fill="#fff" stroke="${NAVY}" stroke-width="5"/><text x="425" y="595" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="36" fill="${NAVY}">A. Memberikan sandinya</text></g>
+ <g id="optSvgB" opacity="0"><rect x="720" y="520" width="510" height="120" rx="22" fill="#fff" stroke="${NAVY}" stroke-width="5"/><text x="975" y="595" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="36" fill="${NAVY}">B. Menolak dengan sopan</text></g>
+ <g transform="translate(1380,760) scale(.85)">
+  <line x1="0" y1="-262" x2="0" y2="-222" stroke="${NAVY}" stroke-width="7"/><circle cx="0" cy="-272" r="15" fill="${YEL}" stroke="${NAVY}" stroke-width="5"/>
+  <rect x="-86" y="-222" width="172" height="138" rx="38" fill="${BLUE}" stroke="${NAVY}" stroke-width="6"/><rect x="-64" y="-200" width="128" height="94" rx="22" fill="${LBLUE}"/>
+  <circle cx="-26" cy="-160" r="14" fill="${NAVY}"/><circle cx="26" cy="-160" r="14" fill="${NAVY}"/><path d="M-22,-134 Q0,-116 22,-134" stroke="${NAVY}" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <rect x="-56" y="-76" width="112" height="92" rx="24" fill="${BLUE}" stroke="${NAVY}" stroke-width="6"/><circle cx="0" cy="-30" r="18" fill="${GREEN}"/>
+ </g>
+</g>
+<g id="endCard" opacity="0">
+ <rect width="1600" height="900" fill="${LBLUE}"/>
+ <text x="800" y="360" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="76" fill="${NAVY}">Kata sandi itu rahasia!</text>
+ <text x="800" y="450" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="800" font-size="40" fill="${NAVY}">Akhir prototipe · Video lengkap berlanjut ke Scene 6: Data Pribadi</text>
+ <rect x="560" y="520" width="480" height="90" rx="22" fill="${GREEN}"/><text x="800" y="580" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="40" fill="#fff">A · Atur kata sandi kuat</text>
+</g>
+<g id="titleCard">
+ <rect width="1600" height="900" fill="${BLUE}"/>
+ <text x="800" y="400" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="44" fill="${LBLUE}">SCENE 4 · SITUASI 1</text>
+ <text x="800" y="500" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="800" font-size="96" fill="#fff">Kata Sandi</text>
+</g>
+</g>`;
+
+        // checklist
+        const rules = [
+          { t: "Minimal 8 karakter", f: (s) => s.length >= 8 },
+          {
+            t: "Huruf besar & kecil",
+            f: (s) => /[A-Z]/.test(s) && /[a-z]/.test(s),
+          },
+          { t: "Ada angka", f: (s) => /\d/.test(s) },
+          { t: "Ada simbol (# ! @)", f: (s) => /[^A-Za-z0-9]/.test(s) },
+          {
+            t: "Bukan nama / tgl lahir",
+            f: (s) => s.length > 0 && !/raka|20\d\d|19\d\d/i.test(s),
+          },
+        ];
+        const appearAt = [30, 32.2, 34.2, 36.2, 38.2];
+        const cl = document.getElementById("checklist");
+        cl.innerHTML =
+          `<rect x="0" y="0" width="560" height="${rules.length * 86 + 100}" rx="28" fill="#fff" stroke="${NAVY}" stroke-width="5"/><text x="34" y="66" font-family="Poppins, sans-serif" font-weight="800" font-size="38" fill="${NAVY}">Kata sandi kuat:</text>` +
+          rules
+            .map(
+              (r, i) =>
+                `<g id="rule${i}" opacity="0" transform="translate(34,${100 + i * 86})"><circle id="ruleDot${i}" cx="26" cy="26" r="26" fill="#E6E9F0"/><path id="ruleChk${i}" d="M14,27 L23,36 L40,17" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0"/><text x="72" y="38" font-family="Nunito, sans-serif" font-weight="800" font-size="34" fill="${NAVY}">${r.t}</text></g>`,
+            )
+            .join("");
+
+        // ---------- helpers ----------
+        const $ = (id) => document.getElementById(id);
+        const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
+        const prog = (t, a, b) => clamp((t - a) / (b - a));
+        const ease = (x) =>
+          x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+        const back = (x) => {
+          const c1 = 1.70158,
+            c3 = c1 + 1;
+          return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+        };
+        const fadeWin = (t, a, b, d = 0.35) =>
+          Math.min(prog(t, a, a + d), 1 - prog(t, b - d, b));
+        const NEW_PW = "Kucing#Lompat7";
+        function pwAt(t) {
+          if (t < 31) return "raka123";
+          if (t < 31.6) return "";
+          const n = Math.floor((t - 31.6) / 0.45) + 1;
+          return NEW_PW.slice(0, clamp(n, 0, NEW_PW.length));
+        }
+        function strength(s) {
+          if (!s) return 0;
+          let sc = 0;
+          rules.forEach((r) => {
+            if (r.f(s)) sc++;
+          });
+          if (s.length < 8) sc = Math.min(sc, 2);
+          return sc;
+        }
+
+        // ---------- render ----------
+        function render(t) {
+          $("titleCard").setAttribute("opacity", 1 - prog(t, 3.2, 4));
+          // Dimas walk in
+          const dx = 1750 + (860 - 1750) * ease(prog(t, 3.6, 5.4));
+          const bob = Math.sin(t * 14) * 6 * (t > 3.6 && t < 5.4 ? 1 : 0);
+          $("dimas").setAttribute("transform", `translate(${dx},${720 + bob})`);
+          // Raka mood
+          const worried = t >= 9 && t < 29;
+          const rk = $("rakaK");
+          rk.querySelector(".happy").setAttribute("opacity", worried ? 0 : 1);
+          rk.querySelector(".worry").setAttribute("opacity", worried ? 1 : 0);
+          rk.querySelector(".brow").setAttribute("opacity", worried ? 1 : 0);
+          // Robi pop + float + move during zoom
+          const rs = t < 12.5 ? 0 : back(prog(t, 12.5, 13.2));
+          const rx = 1300 + (1480 - 1300) * ease(prog(t, 22.5, 23.5));
+          const ry = 640 + Math.sin(t * 2.2) * 10;
+          $("robi").setAttribute(
+            "transform",
+            `translate(${rx},${ry}) scale(${rs.toFixed(3)})`,
+          );
+          $("robiLight").setAttribute(
+            "fill",
+            Math.floor(t * 2) % 2 ? GREEN : "#6FE09F",
+          );
+          // bubbles
+          $("bDimas").setAttribute("opacity", fadeWin(t, 5, 9));
+          $("bRaka").setAttribute("opacity", fadeWin(t, 9.2, 12.5));
+          $("bRobi1").setAttribute("opacity", fadeWin(t, 13, 16));
+          const tb = fadeWin(t, 16.2, 23);
+          $("tipBrush").setAttribute("opacity", tb);
+          $("tipBrush").setAttribute(
+            "transform",
+            `translate(1050,${250 + (1 - tb) * 20})`,
+          );
+          // zoom panel
+          const z = fadeWin(t, 23, 41, 0.6);
+          $("zoom").setAttribute("opacity", z);
+          const ps = 0.85 + 0.15 * ease(prog(t, 23, 23.8));
+          $("phone").setAttribute(
+            "transform",
+            `translate(560,450) scale(${ps})`,
+          );
+          const pw = pwAt(t);
+          $("pwText").textContent = pw;
+          let caretX = -130;
+          try {
+            caretX = -134 + $("pwText").getComputedTextLength() + 4;
+          } catch (e) {}
+          $("caret").setAttribute("x", caretX);
+          $("caret").setAttribute(
+            "opacity",
+            t >= 31 && t < 39 && Math.floor(t * 3) % 2 === 0 ? 1 : 0,
+          );
+          const sc = t < 31 ? 1 : strength(pw);
+          const w = [20, 60, 110, 170, 230, 300][sc];
+          const col = sc <= 2 ? RED : sc <= 4 ? YEL : GREEN;
+          const lbl = sc <= 2 ? "LEMAH" : sc <= 4 ? "SEDANG" : "KUAT";
+          $("meter").setAttribute("width", w);
+          $("meter").setAttribute("fill", col);
+          $("meterLbl").textContent = pw ? lbl : "—";
+          $("meterLbl").setAttribute("fill", col);
+          $("zoomRing").setAttribute(
+            "opacity",
+            t >= 24 && t < 29 ? 0.5 + 0.5 * Math.sin(t * 6) : 0,
+          );
+          rules.forEach((r, i) => {
+            const a = prog(t, appearAt[i], appearAt[i] + 0.4);
+            $("rule" + i).setAttribute("opacity", a);
+            $("rule" + i).setAttribute(
+              "transform",
+              `translate(${34 + (1 - a) * 30},${100 + i * 86})`,
+            );
+            const ok = t >= 31.6 && r.f(pw);
+            $("ruleDot" + i).setAttribute("fill", ok ? GREEN : "#E6E9F0");
+            $("ruleChk" + i).setAttribute("opacity", ok ? 1 : 0);
+          });
+          // wipe to scene 5
+          const wp = ease(prog(t, 41, 42.2));
+          $("wipeR").setAttribute("x", 1600 - 1600 * wp);
+          $("wipe").setAttribute(
+            "opacity",
+            t < 42.2 ? 1 : 1 - prog(t, 42.2, 42.8),
+          );
+          $("scene5").setAttribute(
+            "opacity",
+            prog(t, 42.2, 42.5) * (1 - prog(t, 50, 50.6)),
+          );
+          $("badge").setAttribute(
+            "opacity",
+            t >= 42.2 ? 0.55 + 0.45 * Math.abs(Math.sin(t * 3)) : 1,
+          );
+          $("optSvgA").setAttribute("opacity", prog(t, 45, 45.5));
+          $("optSvgB").setAttribute("opacity", prog(t, 46, 46.5));
+          $("scene4").setAttribute("opacity", t < 42.3 ? 1 : 0);
+          $("endCard").setAttribute("opacity", prog(t, 50.2, 50.8));
+          // subtitles
+          const c = cues.find((c) => t >= c.s && t < c.e);
+          const sub = $("sub");
+          if (c && ccOn) {
+            sub.innerHTML = `<b style="color:${c.who === "Dimas" ? "#D7B4F0" : c.who === "Raka" ? "#9CC7FF" : "#F2C94C"}">${c.who}:</b>${c.t}`;
+            sub.hidden = false;
+          } else sub.hidden = true;
+          // chapters highlight
+          let idx = 0;
+          chapters.forEach((ch, i) => {
+            if (t >= ch[0]) idx = i;
+          });
+          document
+            .querySelectorAll(".chap")
+            .forEach((b, i) => b.classList.toggle("on", i === idx));
+          $("seek").value = t;
+          $("time").textContent = fmt(t) + " / " + fmt(END);
+        }
+        const fmt = (s) => {
+          s = Math.floor(s);
+          return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+        };
+
+        // ---------- playback ----------
+        let t = 0,
+          playing = false,
+          last = 0,
+          answered = false,
+          ccOn = true,
+          voiceOn = true,
+          spokenIdx = -1;
+        const synth =
+          "speechSynthesis" in window ? window.speechSynthesis : null;
+        let voice = null;
+        function pickVoice() {
+          try {
+            const vs = synth.getVoices();
+            voice =
+              vs.find((v) => /^id/i.test(v.lang)) ||
+              vs.find((v) => /indones/i.test(v.name)) ||
+              null;
+          } catch (e) {}
+        }
+        if (synth) {
+          pickVoice();
+          try {
+            synth.onvoiceschanged = pickVoice;
+          } catch (e) {}
+        }
+        function speak(c) {
+          if (!synth || !voiceOn) return;
+          try {
+            synth.cancel();
+            const u = new SpeechSynthesisUtterance(c.t.replace(/[“”]/g, ""));
+            u.lang = "id-ID";
+            if (voice) u.voice = voice;
+            u.rate = 1.0;
+            u.pitch = c.pitch || 1;
+            synth.speak(u);
+          } catch (e) {}
+        }
+        function stopVoice() {
+          try {
+            synth && synth.cancel();
+          } catch (e) {}
+        }
+        function setPlaying(p) {
+          playing = p;
+          $("playBtn").textContent = p ? "❚❚ Jeda" : "▶ Putar";
+          $("playBtn").setAttribute("aria-label", p ? "Jeda" : "Putar");
+          if (p) {
+            last = performance.now();
+            requestAnimationFrame(loop);
+          } else stopVoice();
+        }
+        function loop(now) {
+          if (!playing) return;
+          const dt = (now - last) / 1000;
+          last = now;
+          const prev = t;
+          t = Math.min(END, t + dt);
+          if (!answered && prev < PAUSE_AT && t >= PAUSE_AT) {
+            t = PAUSE_AT;
+            render(t);
+            setPlaying(false);
+            showPause();
+            return;
+          }
+          const ci = cues.findIndex((c) => t >= c.s && t < c.e);
+          if (ci !== -1 && ci !== spokenIdx) {
+            spokenIdx = ci;
+            speak(cues[ci]);
+          }
+          render(t);
+          if (t >= END) {
+            setPlaying(false);
+            return;
+          }
+          requestAnimationFrame(loop);
+        }
+        function seek(v) {
+          t = clamp(v, 0, END);
+          spokenIdx = cues.findIndex((c) => t >= c.s && t < c.e);
+          stopVoice();
+          $("pauseOv").hidden = true;
+          render(t);
+        }
+        function showPause() {
+          $("pauseOv").hidden = false;
+          $("fb").hidden = true;
+          $("contBtn").hidden = true;
+          $("optA").focus();
+        }
+        function answer(ok) {
+          const fb = $("fb");
+          fb.hidden = false;
+          fb.className = "fb " + (ok ? "ok" : "no");
+          fb.textContent = ok
+            ? "Tepat! Menolak dengan sopan menjaga akun tetap aman. Raka bisa berkata: “Maaf ya, kata sandi itu rahasia.”"
+            : "Coba pikirkan lagi. Kata sandi seperti sikat gigi: tidak dipinjamkan kepada siapa pun, bahkan sahabat.";
+          if (ok) {
+            answered = true;
+            $("contBtn").hidden = false;
+            $("contBtn").focus();
+          }
+        }
+        $("optA").onclick = () => answer(false);
+        $("optB").onclick = () => answer(true);
+        $("contBtn").onclick = () => {
+          $("pauseOv").hidden = true;
+          t = PAUSE_AT + 0.01;
+          setPlaying(true);
+        };
+        $("startBtn").onclick = () => {
+          $("startOv").hidden = true;
+          setPlaying(true);
+        };
+        $("playBtn").onclick = () => {
+          $("startOv").hidden = true;
+          if (!$("pauseOv").hidden) return;
+          if (t >= END) seek(0);
+          setPlaying(!playing);
+        };
+        $("restartBtn").onclick = () => {
+          answered = false;
+          $("startOv").hidden = true;
+          seek(0);
+          setPlaying(true);
+        };
+        $("seek").oninput = (e) => {
+          $("startOv").hidden = true;
+          const v = parseFloat(e.target.value);
+          if (v < PAUSE_AT) answered = false;
+          seek(v);
+        };
+        $("voiceBtn").onclick = () => {
+          voiceOn = !voiceOn;
+          $("voiceBtn").setAttribute("aria-pressed", voiceOn);
+          $("voiceBtn").textContent = voiceOn ? "🔊 Narasi" : "🔇 Narasi";
+          if (!voiceOn) stopVoice();
+        };
+        $("ccBtn").onclick = () => {
+          ccOn = !ccOn;
+          $("ccBtn").setAttribute("aria-pressed", ccOn);
+          render(t);
+        };
+        document.addEventListener("keydown", (e) => {
+          if (
+            e.code === "Space" &&
+            !/INPUT|BUTTON/.test(document.activeElement.tagName)
+          ) {
+            e.preventDefault();
+            $("playBtn").click();
+          }
+        });
+        if (!synth) {
+          $("voiceBtn").disabled = true;
+          $("voiceBtn").textContent = "🔇 Narasi tidak tersedia";
+          voiceOn = false;
+        }
+
+        // chapters list
+        $("chaps").innerHTML = chapters
+          .map(
+            (c, i) =>
+              `<li><button class="chap" data-t="${c[0]}"><span class="ts">${fmt(c[0])}</span><span>${c[1]}</span></button></li>`,
+          )
+          .join("");
+        document.querySelectorAll(".chap").forEach(
+          (b) =>
+            (b.onclick = () => {
+              $("startOv").hidden = true;
+              const v = parseFloat(b.dataset.t);
+              if (v < PAUSE_AT) answered = false;
+              seek(v);
+              if (v < PAUSE_AT || answered) setPlaying(true);
+              else showPause();
+            }),
+        );
+
+        // first frame: show scene 4 at 6s as a still behind the start card
+        render(6);
+        t = 0;
+        $("seek").value = 0;
+        $("time").textContent = "0:00 / " + fmt(END);
+      })();
+    </script>
+  </body>
+</html>
